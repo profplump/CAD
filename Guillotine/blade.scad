@@ -32,7 +32,3 @@ module blade() {
 		}
 	}
 }
-
-color([0,0.5,0.7,1]) {
-	blade();
-}
