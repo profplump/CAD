@@ -1,16 +1,17 @@
-header_width = 32.0;
-header_height = 11.3;
-footer_width = 33.6;
-footer_height = 4.0;
-riser_width = 3.5;
-riser_height = 25.7;
-neck_radius = 11.0 / 2;
-stock_width = 23.0;
-stock_height = 15.2;
-stock_foot_height = 3.7;
 frame_depth = 3.3;
+stock_inset_height = 0.5;
+stock_inset_depth = 1.0;
 
-clean_buffer = 0.01;
+header_width = 42.0;
+header_height = header_width * 0.2;
+footer_width = header_width * 1.05;
+footer_height = footer_width * 0.1;
+riser_width = header_width * 0.1;
+riser_height = header_height * 4.5;
+stock_width = header_width * 0.67;
+stock_height = stock_width * 0.67;
+stock_foot_height = footer_height * 1.25;
+neck_radius = stock_width / 5;
 
 header_riser_offset = ((header_width - stock_width) / 2) - riser_width;
 
@@ -26,8 +27,17 @@ module frame() {
 		difference() {
 		cube([stock_height, stock_width, frame_depth]);
 		translate([stock_height / 2, stock_width / 2, -clean_buffer]) {
-			cylinder($fn = 36, h = frame_depth + (clean_buffer * 2),
+			cylinder(h = frame_depth + (clean_buffer * 2),
 				r1 = neck_radius, r2 = neck_radius);
+		}
+		translate([stock_height / 2, 0, frame_depth - stock_inset_depth]) {
+			cube([stock_inset_height, stock_width, stock_inset_depth + clean_buffer]);
+		}
+		translate([0, 0, frame_depth - stock_inset_depth]) {
+			cube([stock_height, stock_inset_height, stock_inset_depth + clean_buffer]);
+		}
+		translate([0, stock_width - stock_inset_height, frame_depth - stock_inset_depth]) {
+			cube([stock_height, stock_inset_height, stock_inset_depth + clean_buffer]);
 		}
 		}
 	}
